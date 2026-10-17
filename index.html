@@ -6,8 +6,6 @@
     <title>Congklatika - Belajar Matematika Seru!</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Tone.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <style>
         :root {
             --primary: #FF6B6B;
@@ -117,17 +115,22 @@
         <button class="btn" onclick="playClickSound()">Mulai Bermain! 🎮</button>
     </div>
 
-    <script>
+    <script type="module">
+        // Load Tone.js as an ES module (works reliably on GitHub Pages and modern browsers)
+        import * as Tone from 'https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js';
+
+        // Create synth
         const synth = new Tone.Synth().toDestination();
 
-        function playClickSound() {
-            Tone.start();
+        // Expose functions to window so inline onclick handlers still work
+        window.playClickSound = async function() {
+            await Tone.start(); // ensures audio context is resumed after user gesture
             synth.triggerAttackRelease("C5", "8n");
             alert("Selamat belajar!");
         }
 
-        function playMascotSound() {
-            Tone.start();
+        window.playMascotSound = async function() {
+            await Tone.start();
             synth.triggerAttackRelease("G5", "8n");
         }
     </script>
